@@ -2,6 +2,7 @@ package com.pie.data;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -19,7 +20,7 @@ public class Note {
     private String text;
     private final String fileAddress;
     private final LocalDate date;
-    private final String route = "./scr/main/resources/grade/";
+    private final String DIRECTORY = "scr/main/resources/";
 
     /**
      * this is the constructor of the note class
@@ -31,10 +32,13 @@ public class Note {
 
     // this method create a new file archive and returns the direction of the archive
     private String createNewFile() {
+        // this put an address whit new aleatory name
+        String _fileAddress = STR."\{DIRECTORY}\{UUID.randomUUID().toString()}.txt";
+        logger.info(STR."file address: \{_fileAddress}");
         try {
-            // this put an address whit new aleatory name
-            String _fileAddress = STR."\{this.route}\{UUID.randomUUID()}.txt";
-            Files.createFile(Path.of(_fileAddress)); // this creates the new file
+            Path path = Path.of(_fileAddress);
+            assert path != null;
+            Files.createFile(path ); // this creates the new file
             logger.info(STR."the new note is in: \{this.fileAddress}");
             return _fileAddress;
         } catch (IOException e) {
@@ -62,15 +66,15 @@ public class Note {
     private void save() throws IOException {
         cleanFile();
         String _text = STR."\{this.title},\{this.text},\{this.fileAddress},\{this.date}";
-        try(BufferedWriter writer = Files.newBufferedWriter(Path.of(this.fileAddress))) {
+        try (BufferedWriter writer = Files.newBufferedWriter(Path.of(this.fileAddress))) {
             writer.write(_text); // write the new text in the file
-        }catch (IOException e){
+        } catch (IOException e) {
             logger.error("cant writing");
         }
     }
 
     private void cleanFile() throws IOException {
-        try(FileWriter writer = new FileWriter(this.fileAddress, false)){
+        try (FileWriter writer = new FileWriter(this.fileAddress, false)) {
             this.logger.info("the file was not clean");
         }
     }
