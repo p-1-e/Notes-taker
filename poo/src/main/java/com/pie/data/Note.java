@@ -1,18 +1,17 @@
 package com.pie.data;
 
+import com.pie.utils.FileUtils;
+import com.pie.utils.NoteUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
-import java.util.UUID;
 import java.util.stream.Stream;
-
-import static java.lang.StringTemplate.STR;
 
 public class Note {
     public final Logger logger = LogManager.getLogger(Note.class);
@@ -20,8 +19,6 @@ public class Note {
     private String text;
     private final String fileAddress;
     private final LocalDate date;
-    private final String DIRECTORY = "scr/main/resources/";
-
     /**
      * this is the constructor of the note class
      */
@@ -32,24 +29,11 @@ public class Note {
 
     // this method create a new file archive and returns the direction of the archive
     private String createNewFile() {
-        // this put an address whit new aleatory name
-        String _fileAddress = STR."\{DIRECTORY}\{UUID.randomUUID().toString()}.txt";
-        logger.info(STR."file address: \{_fileAddress}");
-        try {
-            Path path = Path.of(_fileAddress);
-            assert path != null;
-            Files.createFile(path ); // this creates the new file
-            logger.info(STR."the new note is in: \{this.fileAddress}");
-            return _fileAddress;
-        } catch (IOException e) {
-            logger.error("the creation of new note not work");
-            return null;
-        }
+        return FileUtils.CreateTextFile(NoteUtils.getFileAddress());
     }
 
     private void actualize() {
         Path path = Path.of(this.fileAddress);
-
         try (Stream<String> stream = Files.lines(path)) {
             stream.forEach(this::build);
         } catch (IOException e) {
@@ -59,24 +43,13 @@ public class Note {
 
     private void build(String text) {
         String[] note = text.split(",");
-        this.text = note[0];
-        this.title = note[1];
+        this.title = note[0]; // title
+        this.text = note[1]; // text
     }
 
-    private void save() throws IOException {
-        cleanFile();
-        String _text = STR."\{this.title},\{this.text},\{this.fileAddress},\{this.date}";
-        try (BufferedWriter writer = Files.newBufferedWriter(Path.of(this.fileAddress))) {
-            writer.write(_text); // write the new text in the file
-        } catch (IOException e) {
-            logger.error("cant writing");
-        }
-    }
-
-    private void cleanFile() throws IOException {
-        try (FileWriter writer = new FileWriter(this.fileAddress, false)) {
-            this.logger.info("the file was not clean");
-        }
+    private void save() {
+        FileUtils.clean(this.fileAddress);
+        FileUtils.write(this.fileAddress, this);
     }
 
     public String getTitle() {
@@ -96,7 +69,7 @@ public class Note {
 
     public void setText(String text) throws IOException {
         this.text = text;
-        this.save();
+        save();
     }
 
     public String getFileAddress() {
