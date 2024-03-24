@@ -5,9 +5,7 @@ import com.pie.utils.NoteUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
@@ -57,7 +55,7 @@ public class Note {
         return title;
     }
 
-    public void setTitle(String title) throws IOException {
+    public void setTitle(String title) {
         this.title = title;
         save();
     }
@@ -67,7 +65,7 @@ public class Note {
         return text;
     }
 
-    public void setText(String text) throws IOException {
+    public void setText(String text) {
         this.text = text;
         save();
     }

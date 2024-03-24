@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class FileUtils {
+    private FileUtils(){} // avoids than someone initialize the class
     public static String CreateTextFile(String fileName) {
         try {
             Path path = Path.of(fileName);
