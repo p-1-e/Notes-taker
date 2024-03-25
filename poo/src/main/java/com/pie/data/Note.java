@@ -5,14 +5,10 @@ import com.pie.utils.NoteUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+
 import java.time.LocalDate;
-import java.util.stream.Stream;
 
 public class Note {
-    public final Logger logger = LogManager.getLogger(Note.class);
     private String title;
     private String text;
     private final String fileAddress;
@@ -31,20 +27,10 @@ public class Note {
     }
 
     private void actualize() {
-        Path path = Path.of(this.fileAddress);
-        try (Stream<String> stream = Files.lines(path)) {
-            stream.forEach(this::build);
-        } catch (IOException e) {
-            logger.error("The reading of the path don't work");
-        }
+        String[] textNote = NoteUtils.actualize(fileAddress);
+        this.title = textNote[0];
+        this.text = textNote[1];
     }
-
-    private void build(String text) {
-        String[] note = text.split(",");
-        this.title = note[0]; // title
-        this.text = note[1]; // text
-    }
-
     private void save() {
         FileUtils.clean(this.fileAddress);
         FileUtils.write(this.fileAddress, this);
