@@ -2,8 +2,7 @@ package com.pie.data;
 
 import com.pie.utils.FileUtils;
 import com.pie.utils.NoteUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 
 
 import java.time.LocalDate;

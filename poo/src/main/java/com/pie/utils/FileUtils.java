@@ -21,9 +21,8 @@ public class FileUtils {
         }
     }
 
-    public static String clean(String fileAddress) { // this method delete all the text in the file
+    public static void clean(String fileAddress) { // this method delete all the text in the file
         try (FileWriter writer = new FileWriter(fileAddress, false)) {
-            return fileAddress;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
