@@ -4,9 +4,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 
 public class FileUtils {
     private static final Logger log = LogManager.getLogger();
@@ -36,15 +36,17 @@ public class FileUtils {
             new FileWriter(fileAddress, false).close();
             return fileAddress;
         } catch (IOException e) {
+            log.error(e.getMessage());
             return null;
         }
     }
 
     public static void write(String fileAddress, String noteString) {
-        try (BufferedWriter writer = Files.newBufferedWriter(Path.of(fileAddress), StandardCharsets.UTF_8)) {
-            writer.write(noteString); // write the new text in the file
+        Path path = Path.of(fileAddress);
+        try {
+            Files.writeString(path, noteString, StandardOpenOption.APPEND);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            log.error(e.getMessage());
         }
     }
 
@@ -53,10 +55,11 @@ public class FileUtils {
             return br.readLine();
         } catch (FileNotFoundException e) {
             log.error("the file was not found");
+            log.error(e.getMessage());
         } catch (IOException e) {
-            log.error("xd i don't not what happened but this crashes");
+            log.error(e.getMessage());
         }
-        return "null";
+        return null;
     }
 
 }
