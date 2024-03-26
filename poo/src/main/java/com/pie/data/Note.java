@@ -22,7 +22,7 @@ public class Note {
 
     // this method create a new file archive and returns the direction of the archive
     private String createNewFile() {
-        return FileUtils.CreateTextFile(NoteUtils.getFileAddress());
+        return FileUtils.newFile(NoteUtils.getFileAddress());
     }
 
     private void actualize() {
@@ -32,7 +32,7 @@ public class Note {
     }
     private void save() {
         FileUtils.clean(this.fileAddress);
-        FileUtils.write(this.fileAddress, this);
+        FileUtils.write(this.fileAddress, NoteUtils.noteToText(this));
     }
 
     public String getTitle() {
