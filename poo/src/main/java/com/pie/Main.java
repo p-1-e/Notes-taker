@@ -14,6 +14,7 @@ public class Main {
         writeTest();
         log.info(Main::readTest);
 
+        System.out.println("Hello");
     }
 
     private static void cleanTest() {
