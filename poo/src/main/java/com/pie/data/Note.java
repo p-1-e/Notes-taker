@@ -15,7 +15,7 @@ public class Note {
     /**
      * this is the constructor of the note class
      */
-    public Note() {
+    public Note(String s, String string, String s1, String string1) {
         this.date = LocalDate.now(); // this line saves the date of the creation of the Note
         this.fileAddress = this.createNewFile();
     }
