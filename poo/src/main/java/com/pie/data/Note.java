@@ -15,9 +15,20 @@ public class Note {
     /**
      * this is the constructor of the note class
      */
-    public Note(String s, String string, String s1, String string1) {
+    public Note() {
         this.date = LocalDate.now(); // this line saves the date of the creation of the Note
         this.fileAddress = this.createNewFile();
+    }
+    public Note(String title, String text, String fileAddress, String date){
+        this.fileAddress = fileAddress;
+        this.date = NoteUtils.getDate(date);
+        this.text = text;
+        this.title = title;
+    }
+
+    @Override
+    public String toString(){
+        return STR."title:  \{getTitle()} \n text: \{getText()} \n address: \{getFileAddress()} \n date: \{getDate()}";
     }
 
     // this method create a new file archive and returns the direction of the archive
