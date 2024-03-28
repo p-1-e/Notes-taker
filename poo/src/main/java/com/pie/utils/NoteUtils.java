@@ -9,11 +9,13 @@ import java.time.LocalDate;
 import java.util.UUID;
 import java.util.stream.Stream;
 
+import static com.pie.utils.NoteConstants.SEPARATOR;
+
 public class NoteUtils {
 
     public static String noteToText(Note note) {
         // return STR."\{note.getTitle()}" + NoteConstants.SEPARATOR + "\{note.getText()},\{note.getDate()},\{note.getFileAddress()}";
-        return note.getTitle() + NoteConstants.SEPARATOR + note.getText() + NoteConstants.SEPARATOR + note.getDate() + NoteConstants.SEPARATOR + note.getFileAddress();
+        return note.getTitle() + SEPARATOR + note.getText() + SEPARATOR + note.getDate() + SEPARATOR + note.getFileAddress();
     }
 
     // this method put an aleatory name to the file address
@@ -35,7 +37,7 @@ public class NoteUtils {
     }
 
     private static String[] build(String s) {
-        return s.split(",");
+        return s.split(SEPARATOR);
     }
 
     public static LocalDate getDate(String date) {
