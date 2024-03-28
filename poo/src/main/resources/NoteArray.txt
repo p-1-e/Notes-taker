@@ -1,1 +1,1 @@
-Nota1|prueba|C:\Users\sebastian\IdeaProjects\Unity-2\poo\src\main\resources\NoteArray.txt|2024-03-18
+Nota1#prueba#C:\Users\sebastian\IdeaProjects\Unity-2\poo\src\main\resources\NoteArray.txt#2024-03-18
