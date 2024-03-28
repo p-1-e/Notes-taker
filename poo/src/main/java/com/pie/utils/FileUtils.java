@@ -57,7 +57,7 @@ public class FileUtils {
             log.error("the file was not found");
             log.error(e.getMessage());
         } catch (IOException e) {
-            log.error(e.getMessage());
+            log.error(STR."Exepcion de lectura: \{e.getMessage()}");
         }
         return null;
     }

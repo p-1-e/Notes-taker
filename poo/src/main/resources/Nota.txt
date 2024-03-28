@@ -1,1 +1,1 @@
-C:\Users\sebastian\IdeaProjects\Unity-2\poo\src\main\resources\NoteArray.txt
+poo/src/main/resources/NoteArray.txt

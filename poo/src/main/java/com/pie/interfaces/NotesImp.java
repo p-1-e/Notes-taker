@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static com.pie.utils.NoteConstants.DIRECTORY;
+import static com.pie.utils.NoteConstants.NOTE_ARRAY;
 import static com.pie.utils.NoteConstants.SEPARATOR;
 
 
@@ -20,7 +21,7 @@ public class NotesImp implements NotesInterface {
 
     @Override
     public String Read() {
-        String note = FileUtils.read(DIRECTORY);
+        String note = FileUtils.read(NOTE_ARRAY);
         if(note.isEmpty()){
             log.info("No existen notas");
         }else{
@@ -51,7 +52,7 @@ public class NotesImp implements NotesInterface {
     }
 
     private Note build(String text){
-        String[] noteArray = text.split(SEPARATOR);
+        String[] noteArray = text.split("#");
         return new Note(noteArray[0], noteArray[1],noteArray[2],noteArray[3]);
 
     }
