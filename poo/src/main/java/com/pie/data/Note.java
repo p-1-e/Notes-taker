@@ -20,10 +20,12 @@ public class Note {
         this.fileAddress = this.createNewFile();
     }
     public Note(String title, String text, String fileAddress, String date){
+        this.title = title;
+        this.text = text;
         this.fileAddress = fileAddress;
         this.date = NoteUtils.getDate(date);
-        this.text = text;
-        this.title = title;
+
+
     }
 
     @Override
