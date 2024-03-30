@@ -30,7 +30,7 @@ public class NoteUtils {
             if (line != null) {
                 return NoteUtils.build(line);
             }
-            throw new NullPointerException("the archive was void");
+            return new String[]{"", ""};
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
