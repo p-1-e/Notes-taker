@@ -6,6 +6,8 @@ import com.pie.service.NotesServiceImp;
 import com.pie.utils.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import java.io.IOException;
+import java.util.List;
 
 public class Main {
     // I used this class for testing the in and out methods
@@ -14,25 +16,22 @@ public class Main {
 
     public static final String FILE_ADDRESS = "poo/src/main/resources/test.txt";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         //writeTest();
         //writeTest();
         //log.info(Main::readTest);
 
         //Read file
-       NotesServiceImp notesServiceImp = new NotesServiceImp(new NotesImp());
-       //String note = notesServiceImp.Read();
-       //System.out.println(note);
+        NotesServiceImp notesServiceImp = new NotesServiceImp(new NotesImp());
 
-       //Write new file
-        var note2 = new Note();
-        var newNote = notesServiceImp.write(note2);
-        System.out.println(newNote);
+
+        List< Note> notes = notesServiceImp.add(new Note());
+        System.out.println(notes.toString());
 
     }
 
     private static void cleanTest() {
-        FileUtils.clean(FILE_ADDRESS );
+        FileUtils.clean(FILE_ADDRESS);
     }
 
     private static String readTest() {

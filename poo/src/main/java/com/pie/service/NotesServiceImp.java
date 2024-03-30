@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -40,5 +41,11 @@ public class NotesServiceImp {
         return optNote.get();
     }
 
+    public List<Note> findAll(){
+        return  notesInterface.findAll();
+    }
 
+    public List<Note> add(Note note){
+        return notesInterface.Add(note);
+    }
 }

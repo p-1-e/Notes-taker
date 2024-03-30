@@ -10,6 +10,10 @@ public interface NotesInterface {
 
     String Read();
     List<Note> Search();
-    List<Note> Add();
+
+    List<Note> Add(Note note);
+
     Optional<Note> Write(Note note);
+
+    List<Note> findAll();// recuperar todas las notas que esten en l
 }

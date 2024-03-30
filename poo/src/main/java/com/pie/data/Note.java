@@ -1,6 +1,7 @@
 package com.pie.data;
 
 import com.pie.utils.FileUtils;
+import com.pie.utils.NoteConstants;
 import com.pie.utils.NoteUtils;
 
 
@@ -18,6 +19,7 @@ public class Note {
     public Note() {
         this.date = LocalDate.now(); // this line saves the date of the creation of the Note
         this.fileAddress = this.createNewFile();
+        FileUtils.write(this.fileAddress, thisToText());
     }
     public Note(String title, String text, String fileAddress, String date){
         this.title = title;
@@ -26,6 +28,9 @@ public class Note {
         this.date = NoteUtils.getDate(date);
 
 
+    }
+    private String thisToText(){
+        return this.title + NoteConstants.SEPARATOR + this.text + NoteConstants.SEPARATOR + this.fileAddress + NoteConstants.SEPARATOR + this.date;
     }
 
     @Override
@@ -49,7 +54,7 @@ public class Note {
     }
 
     public String getTitle() {
-        actualize();
+      //  actualize();
         return title;
     }
 
@@ -59,7 +64,7 @@ public class Note {
     }
 
     public String getText() {
-        this.actualize();
+     //   this.actualize();
         return text;
     }
 
