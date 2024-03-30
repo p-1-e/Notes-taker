@@ -1,5 +1,6 @@
 package com.pie;
 
+import com.pie.data.Note;
 import com.pie.interfaces.NotesImp;
 import com.pie.service.NotesServiceImp;
 import com.pie.utils.FileUtils;
@@ -18,9 +19,16 @@ public class Main {
         //writeTest();
         //log.info(Main::readTest);
 
+        //Read file
        NotesServiceImp notesServiceImp = new NotesServiceImp(new NotesImp());
-       String note = notesServiceImp.Read();
-       System.out.println(note);
+       //String note = notesServiceImp.Read();
+       //System.out.println(note);
+
+       //Write new file
+        var note2 = new Note();
+        var newNote = notesServiceImp.write(note2);
+        System.out.println(newNote);
+
     }
 
     private static void cleanTest() {

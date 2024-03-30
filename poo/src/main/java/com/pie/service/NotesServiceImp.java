@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import static com.pie.utils.NoteConstants.SEPARATOR;
@@ -28,6 +29,15 @@ public class NotesServiceImp {
             log.info("La nota esta vacia");
         }
         return note;
+    }
+
+    public Note write(Note note){
+        Optional<Note> optNote = notesInterface.Write(note);
+
+        if(optNote.isEmpty()){
+            log.info("La nota esta vacia");
+        }
+        return optNote.get();
     }
 
 
