@@ -1,6 +1,7 @@
-package com.pie.interfaces;
+package com.pie.repository.implementatiion;
 
 import com.pie.data.Note;
+import com.pie.repository.NotesInterface;
 import com.pie.utils.FileUtils;
 import com.pie.utils.NoteUtils;
 import org.apache.logging.log4j.LogManager;
@@ -26,10 +27,11 @@ public class NotesImp implements NotesInterface {
     private static List<Note> notes = new ArrayList<>();
 
     @Override
-    public String Read() {
+    public String read() {
         String note = FileUtils.read(NOTE_ARRAY);
+        assert note != null;
         if (note.isEmpty()) {
-            log.info("No existen notas");
+            log.info("there is not notes");
         } else {
 
             Path path = Paths.get(note);
@@ -44,26 +46,31 @@ public class NotesImp implements NotesInterface {
     }
 
     @Override
-    public List<Note> Search() {
+    public List<Note> search(String title) {
+        return null;
+    }
+
+    @Override
+    public List<Note> search(String text) {
         return null;
     }
 
 
     @Override
-    public List<Note> Add(Note note) {
-        // Actualiza el archivo
+    public List<Note> add(Note note) {
+        // actualize the text file
         String files = FileUtils.read(NOTE_ARRAY) + SEPARATOR + note.getFileAddress();
         FileUtils.clean(NOTE_ARRAY);
         FileUtils.write(NOTE_ARRAY, files);
 
-        // Actualiza en ram
+        // actualize the array in memory
         notes = findAll();
         notes.add(note);
         return notes;
     }
 
     @Override
-    public Optional<Note> Write(Note note) {
+    public Optional<Note> write(Note note) {
         String content = NoteUtils.noteToText(note);
         FileUtils.write(note.getFileAddress(), content);
         return Optional.of(note);
@@ -82,13 +89,18 @@ public class NotesImp implements NotesInterface {
         return notes;
     }
 
+    @Override
+    public Note item(int index) {
+        return null;
+    }
+
     private Note toNote(String direccion) {
-        String[] noteString = FileUtils.read(direccion).split(SEPARATOR);
+        String[] noteString = Objects.requireNonNull(FileUtils.read(direccion)).split(SEPARATOR);
         return new Note(noteString[0], noteString[1], noteString[2], noteString[3]);
     }
 
     private Note build(String text) {
-        String[] noteArray = text.split("#");
+        String[] noteArray = text.split(SEPARATOR);
         return new Note(noteArray[0], noteArray[1], noteArray[2], noteArray[3]);
     }
 }

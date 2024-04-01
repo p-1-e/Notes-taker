@@ -5,7 +5,6 @@ import com.pie.utils.NoteConstants;
 import com.pie.utils.NoteUtils;
 
 
-
 import java.time.LocalDate;
 
 public class Note {
@@ -13,6 +12,7 @@ public class Note {
     private String text;
     private final String fileAddress;
     private final LocalDate date;
+
     /**
      * this is the constructor of the note class
      */
@@ -21,20 +21,20 @@ public class Note {
         this.fileAddress = this.createNewFile();
         FileUtils.write(this.fileAddress, thisToText());
     }
-    public Note(String title, String text, String fileAddress, String date){
+
+    public Note(String title, String text, String fileAddress, String date) {
         this.title = title;
         this.text = text;
         this.fileAddress = fileAddress;
         this.date = NoteUtils.getDate(date);
-
-
     }
-    private String thisToText(){
+
+    private String thisToText() {
         return this.title + NoteConstants.SEPARATOR + this.text + NoteConstants.SEPARATOR + this.fileAddress + NoteConstants.SEPARATOR + this.date;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return STR."title:  \{getTitle()} \n text: \{getText()} \n address: \{getFileAddress()} \n date: \{getDate()}";
     }
 
@@ -43,18 +43,12 @@ public class Note {
         return FileUtils.newFile(NoteUtils.getFileAddress());
     }
 
-    private void actualize() {
-        String[] textNote = NoteUtils.actualize(fileAddress);
-        this.title = textNote[0];
-        this.text = textNote[1];
-    }
     private void save() {
         FileUtils.clean(this.fileAddress);
         FileUtils.write(this.fileAddress, NoteUtils.noteToText(this));
     }
 
     public String getTitle() {
-      //  actualize();
         return title;
     }
 
@@ -64,7 +58,7 @@ public class Note {
     }
 
     public String getText() {
-     //   this.actualize();
+
         return text;
     }
 
