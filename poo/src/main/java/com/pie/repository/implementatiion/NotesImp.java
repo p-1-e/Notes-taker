@@ -46,15 +46,11 @@ public class NotesImp implements NotesInterface {
     }
 
     @Override
-    public List<Note> search(String title) {
-        return null;
+    public List<Note> search(String term) { 
+        List<Note> notes = findAll();
+        return notes.stream().
+            filter(note -> note.getTitle().contains(term) || note.getText().contains(term)).toList(); 
     }
-
-    @Override
-    public List<Note> search(String text) {
-        return null;
-    }
-
 
     @Override
     public List<Note> add(Note note) {
