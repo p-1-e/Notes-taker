@@ -13,11 +13,11 @@ public interface NotesInterface {
     List<Note> search(String term); // this method search in the array of notes by a term 
     // this term can be in the title or in the text of the note 
 
-    List<Note> add(Note note);
+    List<Note> add(Note note); // this add a note in the text file NoteArray.txt
 
     Optional<Note> write(Note note);
 
     List<Note> findAll();// find all the notes that are into the file NoteArray.txt
-    
+
     Note item(int index); // find the note in the indicated index
 }

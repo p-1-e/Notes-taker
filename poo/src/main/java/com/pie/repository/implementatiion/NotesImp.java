@@ -54,8 +54,13 @@ public class NotesImp implements NotesInterface {
 
     @Override
     public List<Note> add(Note note) {
+        String files; 
         // actualize the text file
-        String files = FileUtils.read(NOTE_ARRAY) + SEPARATOR + note.getFileAddress();
+        if (FileUtils.read(NOTE_ARRAY) == null){
+            files = note.getFileAddress(); 
+        } else {
+            files = FileUtils.read(NOTE_ARRAY) + SEPARATOR + note.getFileAddress();
+        }
         FileUtils.clean(NOTE_ARRAY);
         FileUtils.write(NOTE_ARRAY, files);
 
@@ -79,7 +84,7 @@ public class NotesImp implements NotesInterface {
             return notes;
         }
         String[] directions = Objects.requireNonNull(FileUtils.read(NOTE_ARRAY)).split(SEPARATOR);
-        for (String diretion : directions) {
+        for (String diretion: directions) {
             notes.add(toNote(diretion));
         }
         return notes;
@@ -87,7 +92,7 @@ public class NotesImp implements NotesInterface {
 
     @Override
     public Note item(int index) {
-        return null;
+        return findAll().get(index); 
     }
 
     private Note toNote(String direccion) {
