@@ -14,11 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.pie.utils.NoteConstants.NOTE_ARRAY;
 import static com.pie.utils.NoteConstants.SEPARATOR;
-
 
 public class NotesImp implements NotesInterface {
     private static final Logger log = LogManager.getLogger();
@@ -44,22 +44,30 @@ public class NotesImp implements NotesInterface {
     }
 
     @Override
-    public List<Note> Search() {
-        return null;
+    public List<Note> SearchTitle(String title) {
+        List<Note> foundNotes = new ArrayList<>(); // Creamos un arrayLists para almacenar las notas encontradas
+        List<Note> allNotes = this.findAll(); // Almacenamos en AllNotes todas las notas que encontramos con el
+                                              // this.findAll()
+
+        for (Note note : allNotes) { // Usamos el forEach para recorrer el arrayList de las Notas creadas en el
+                                     // sistema
+            if (note.getTitle().equalsIgnoreCase(title)) {// El If es para encontrar las similitudes en los titulos de
+                                                          // las notas
+                                                          // equalsIgnoreCase: Se usa para ignorar mayusculas y
+                                                          // minusculas en la busqueda
+                foundNotes.add(note); // Agregamos las notas con el titulo que buscamos en el arrayList foundNotes
+            }
+        }
+        return foundNotes; // Retornamos el arrayList con los resultados donde el titulo coincide con el
+                           // que buscamos
     }
 
     @Override
-    public List<Note> SearchTitle(String title) {
-        List<Note> foundNotes = new ArrayList<>();      // Creamos un arrayLists para almacenar las notas encontradas
-        List<Note> allNotes = this.findAll();           // Almacenamos en AllNotes todas las notas que encontramos con el this.findAll()
-
-        for (Note note : allNotes){                     // Usamos el forEach para recorrer el arrayList de las Notas creadas en el sistema
-            if(note.getTitle().equalsIgnoreCase(title)){// El If es para encontrar  las similitudes en los titulos de las notas
-                                                        // equalsIgnoreCase: Se usa para ignorar mayusculas y minusculas en la busqueda
-                foundNotes.add(note);                   // Agregamos las notas con el titulo que buscamos en el arrayList foundNotes
-            }
-        }
-        return foundNotes;                              // Retornamos el arrayList con los resultados donde el titulo coincide con el que buscamos
+    public List<Note> searchByText(String text) {
+        List<Note> allNotes = this.findAll();
+        return allNotes.stream()
+                .filter(note -> note.getText().toLowerCase().contains(text.toLowerCase()))
+                .collect(Collectors.toList()); // Filtrar las notas por texto de búsqueda y devolver la lista resultante
     }
 
     @Override

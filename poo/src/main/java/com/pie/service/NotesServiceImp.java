@@ -32,6 +32,10 @@ public class NotesServiceImp {
         return note;
     }
 
+    public List<Note> searchByText(String text) {
+        return notesInterface.searchByText(text);
+    }
+
     public Note write(Note note){
         Optional<Note> optNote = notesInterface.Write(note);
 

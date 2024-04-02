@@ -9,9 +9,10 @@ import java.util.Optional;
 public interface NotesInterface {
 
     String Read();
-    List<Note> Search();
 
     List<Note> SearchTitle(String title);
+
+    List<Note> searchByText(String text);
 
     List<Note> Add(Note note);
 
