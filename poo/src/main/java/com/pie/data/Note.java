@@ -43,11 +43,6 @@ public class Note {
         return FileUtils.newFile(NoteUtils.getFileAddress());
     }
 
-    private void actualize() {
-        String[] textNote = NoteUtils.actualize(fileAddress);
-        this.title = textNote[0];
-        this.text = textNote[1];
-    }
     private void save() {
         FileUtils.clean(this.fileAddress);
         FileUtils.write(this.fileAddress, NoteUtils.noteToText(this));

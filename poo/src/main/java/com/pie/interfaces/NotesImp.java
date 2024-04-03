@@ -44,7 +44,7 @@ public class NotesImp implements NotesInterface {
     }
 
     @Override
-    public List<Note> SearchTitle(String title) {
+    public List<Note> searchByTitle(String title) {
         List<Note> foundNotes = new ArrayList<>(); // Creamos un arrayLists para almacenar las notas encontradas
         List<Note> allNotes = this.findAll(); // Almacenamos en AllNotes todas las notas que encontramos con el
                                               // this.findAll()
@@ -72,12 +72,16 @@ public class NotesImp implements NotesInterface {
 
     @Override
     public List<Note> Add(Note note) {
-        // Actualiza el archivo
-        String files = FileUtils.read(NOTE_ARRAY) + SEPARATOR + note.getFileAddress();
+        // actualize the file text
+        String files;
+        if (FileUtils.read(NOTE_ARRAY) != null)
+            files = FileUtils.read(NOTE_ARRAY) + SEPARATOR + note.getFileAddress();
+        else
+            files = note.getFileAddress();
         FileUtils.clean(NOTE_ARRAY);
         FileUtils.write(NOTE_ARRAY, files);
 
-        // Actualiza en ram
+        // actualize in ram
         notes = findAll();
         notes.add(note);
         return notes;
@@ -97,19 +101,19 @@ public class NotesImp implements NotesInterface {
             return notes;
         }
         String[] directions = Objects.requireNonNull(FileUtils.read(NOTE_ARRAY)).split(SEPARATOR);
-        for (String diretion : directions) {
-            notes.add(toNote(diretion));
+        for (String direction : directions) {
+            notes.add(toNote(direction));
         }
         return notes;
     }
 
-    private Note toNote(String direccion) {
-        String[] noteString = FileUtils.read(direccion).split(SEPARATOR);
+    private Note toNote(String direction) {
+        String[] noteString = FileUtils.read(direction).split(SEPARATOR);
         return new Note(noteString[0], noteString[1], noteString[2], noteString[3]);
     }
 
     private Note build(String text) {
-        String[] noteArray = text.split("#");
+        String[] noteArray = text.split(SEPARATOR);
         return new Note(noteArray[0], noteArray[1], noteArray[2], noteArray[3]);
     }
 }

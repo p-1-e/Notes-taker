@@ -32,6 +32,9 @@ public class NotesServiceImp {
         return note;
     }
 
+    public List<Note> searchByTitle(String title){
+        return notesInterface.searchByTitle(title);
+    }
     public List<Note> searchByText(String text) {
         return notesInterface.searchByText(text);
     }

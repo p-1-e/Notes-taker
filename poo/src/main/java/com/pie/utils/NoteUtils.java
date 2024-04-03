@@ -23,18 +23,6 @@ public class NoteUtils {
         return STR."\{NoteConstants.DIRECTORY}\{UUID.randomUUID().toString()}.txt";
     }
 
-    public static String[] actualize(String fileAddress) {
-        Path path = Path.of(fileAddress);
-        try (Stream<String> reading = Files.lines(path)) {
-            String line = reading.findFirst().orElse(null);
-            if (line != null) {
-                return NoteUtils.build(line);
-            }
-            return new String[]{"", ""};
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     private static String[] build(String s) {
         return s.split(SEPARATOR);

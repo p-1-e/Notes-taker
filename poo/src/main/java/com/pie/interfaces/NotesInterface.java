@@ -10,7 +10,7 @@ public interface NotesInterface {
 
     String Read();
 
-    List<Note> SearchTitle(String title);
+    List<Note> searchByTitle(String title);
 
     List<Note> searchByText(String text);
 
