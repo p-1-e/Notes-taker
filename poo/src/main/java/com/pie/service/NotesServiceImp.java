@@ -23,36 +23,37 @@ public class NotesServiceImp {
         this.notesInterface = notesInterface;
     }
 
-    public String Read(){
+    public String Read() {
         var note = notesInterface.Read();
 
-        if(note.isEmpty()){
+        if (note.isEmpty()) {
             log.info("La nota esta vacia");
         }
         return note;
     }
 
-    public List<Note> searchByTitle(String title){
+    public List<Note> searchByTitle(String title) {
         return notesInterface.searchByTitle(title);
     }
+
     public List<Note> searchByText(String text) {
         return notesInterface.searchByText(text);
     }
 
-    public Note write(Note note){
+    public Note write(Note note) {
         Optional<Note> optNote = notesInterface.Write(note);
 
-        if(optNote.isEmpty()){
+        if (optNote.isEmpty()) {
             log.info("La nota esta vacia");
         }
         return optNote.get();
     }
 
-    public List<Note> findAll(){
-        return  notesInterface.findAll();
+    public List<Note> findAll() {
+        return notesInterface.findAll();
     }
 
-    public List<Note> add(Note note){
+    public List<Note> add(Note note) {
         return notesInterface.Add(note);
     }
 }
