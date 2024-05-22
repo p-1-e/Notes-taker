@@ -14,7 +14,7 @@ public class Main {
     private static final Scanner sc = new Scanner(System.in); 
     private static NotesInterface noteImpl = new NotesImp();
 
-//    public static final String FILE_ADDRESS = "poo/src/main/resources/test.txt";
+    // public static final String FILE_ADDRESS = "poo/src/main/resources/test.txt";
 
     public static void main(String[] args) {
         create5Notes();
@@ -40,5 +40,4 @@ public class Main {
         note.setTitle(title);
         note.setText(text);
     }
-
 }

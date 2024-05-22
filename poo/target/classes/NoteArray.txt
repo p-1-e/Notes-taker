@@ -1,1 +1,1 @@
-Nota1#prueba#C:\Users\sebastian\IdeaProjects\Unity-2\poo\src\main\resources\NoteArray.txt#2024-03-18
+poo/src/main/resources/bd7608ec-2ea2-44d8-9e4c-e9e027c637a3.txt#poo/src/main/resources/129b0706-7881-4194-b8bb-3f3df5d8be2b.txt#poo/src/main/resources/0eae616d-f3f7-4588-a254-00121ab70bc1.txt#poo/src/main/resources/94f2949c-8531-4bf8-a7a5-6b17b0e28e3e.txt#poo/src/main/resources/c83e1bd5-8ac2-48b6-8236-8091fa6fe4cf.txt
