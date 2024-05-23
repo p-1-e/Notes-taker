@@ -40,7 +40,7 @@ public class Note {
         return FileUtils.newFile(NoteUtils.getFileAddress());
     }
 
-    private void save() {
+    public void save() {
         FileUtils.clean(this.fileAddress);
         FileUtils.write(this.fileAddress, NoteUtils.noteToText(this));
     }

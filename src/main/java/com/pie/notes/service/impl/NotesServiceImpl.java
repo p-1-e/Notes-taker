@@ -3,10 +3,12 @@ package com.pie.notes.service.impl;
 import com.pie.notes.data.Note;
 import com.pie.notes.repository.NotesRepository;
 import com.pie.notes.service.NotesService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class NotesServiceImpl implements NotesService {
     private final NotesRepository notesRepository;
 

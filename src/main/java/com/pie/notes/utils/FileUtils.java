@@ -51,11 +51,11 @@ public class FileUtils {
     }
 
     public static String read(String fileAddress) {
+        log.info("the address is: {}", fileAddress);
         try (BufferedReader br = new BufferedReader(new FileReader(fileAddress))) {
             return br.readLine();
         } catch (FileNotFoundException e) {
-            log.error("the file was not found");
-            log.error(e.getMessage());
+            log.error("error {} with the file {}", e.getMessage(), fileAddress);
         } catch (IOException e) {
             log.error("Exepcion de lectura: {}", e.getMessage());
         }

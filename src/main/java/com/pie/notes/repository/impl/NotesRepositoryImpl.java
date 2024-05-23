@@ -3,10 +3,10 @@ package com.pie.notes.repository.impl;
 import com.pie.notes.data.Note;
 import com.pie.notes.repository.NotesRepository;
 import com.pie.notes.utils.FileUtils;
-import com.pie.notes.utils.NoteConstants;
 import com.pie.notes.utils.NoteUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Repository;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 import static com.pie.notes.utils.NoteConstants.NOTE_ARRAY;
 import static com.pie.notes.utils.NoteConstants.SEPARATOR;
 
+@Repository
 public class NotesRepositoryImpl implements NotesRepository {
     private static final Logger log = LogManager.getLogger();
 
@@ -46,7 +47,7 @@ public class NotesRepositoryImpl implements NotesRepository {
     @Override
     public Note save(Note note) {
         findAll().add(note);
-        String direction = MessageFormat.format("{0}{1}", SEPARATOR, note.getFileAddress());
+        String direction = MessageFormat.format("{0}{1}", note.getFileAddress(), SEPARATOR);
         FileUtils.write(NOTE_ARRAY, direction);
         return note;
     }
@@ -68,7 +69,7 @@ public class NotesRepositoryImpl implements NotesRepository {
 
     @Override
     public List<Note> findAll() {
-        notes = new ArrayList<>();
+        notes = List.of();
         if (FileUtils.read(NOTE_ARRAY) == null) {
             return notes;
         }
