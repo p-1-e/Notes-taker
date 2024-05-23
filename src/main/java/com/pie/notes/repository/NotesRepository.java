@@ -5,15 +5,16 @@ import java.util.List;
 import java.util.Optional;
 
 public interface NotesRepository {
-    String Read();
 
     List<Note> searchByTitle(String title);
 
     List<Note> searchByText(String text);
 
-    List<Note> Add(Note note);
+    Note save(Note note);
 
-    Optional<Note> Write(Note note);
+    Optional<Note> write(Note note);
 
-    List<Note> findAll();// recuperar todas las notas que esten en l
+    Note item(int index);
+
+    List<Note> findAll();
 }

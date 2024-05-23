@@ -25,8 +25,6 @@ public class Note {
         this.text = text;
         this.fileAddress = fileAddress;
         this.date = NoteUtils.getDate(date);
-
-
     }
     private String thisToText(){
         return this.title + NoteConstants.SEPARATOR + this.text + NoteConstants.SEPARATOR + this.fileAddress + NoteConstants.SEPARATOR + this.date;
@@ -48,7 +46,6 @@ public class Note {
     }
 
     public String getTitle() {
-        //  actualize();
         return title;
     }
 
@@ -58,7 +55,6 @@ public class Note {
     }
 
     public String getText() {
-        //   this.actualize();
         return text;
     }
 

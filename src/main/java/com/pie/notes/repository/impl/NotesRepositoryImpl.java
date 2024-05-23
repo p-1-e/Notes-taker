@@ -3,14 +3,12 @@ package com.pie.notes.repository.impl;
 import com.pie.notes.data.Note;
 import com.pie.notes.repository.NotesRepository;
 import com.pie.notes.utils.FileUtils;
+import com.pie.notes.utils.NoteConstants;
 import com.pie.notes.utils.NoteUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -20,29 +18,10 @@ import java.util.stream.Collectors;
 import static com.pie.notes.utils.NoteConstants.NOTE_ARRAY;
 import static com.pie.notes.utils.NoteConstants.SEPARATOR;
 
-public class NotesImp implements NotesRepository {
+public class NotesRepositoryImpl implements NotesRepository {
     private static final Logger log = LogManager.getLogger();
 
     private static List<Note> notes = new ArrayList<>();
-
-    @Override
-    public String Read() {
-        String note = FileUtils.read(NOTE_ARRAY);
-        if (note.isEmpty()) {
-            log.info("No existen notas");
-        } else {
-
-            Path path = Paths.get(note);
-            try {
-                // todo: fix it
-                Stream<String> stream = Files.lines(path);
-                return stream.map(this::build).toList().toString();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return note;
-    }
 
     @Override
     public List<Note> searchByTitle(String title) {
@@ -65,27 +44,26 @@ public class NotesImp implements NotesRepository {
     }
 
     @Override
-    public List<Note> Add(Note note) {
-        // actualize the file text
-        String files;
-        if (FileUtils.read(NOTE_ARRAY) != null)
-            files = FileUtils.read(NOTE_ARRAY) + SEPARATOR + note.getFileAddress();
-        else
-            files = note.getFileAddress();
-        FileUtils.clean(NOTE_ARRAY);
-        FileUtils.write(NOTE_ARRAY, files);
-
-        // actualize in ram
-        notes = findAll();
-        notes.add(note);
-        return notes;
+    public Note save(Note note) {
+        findAll().add(note);
+        String direction = MessageFormat.format("{0}{1}", SEPARATOR, note.getFileAddress());
+        FileUtils.write(NOTE_ARRAY, direction);
+        return note;
     }
 
     @Override
-    public Optional<Note> Write(Note note) {
+    public Optional<Note> write(Note note) {
         String content = NoteUtils.noteToText(note);
         FileUtils.write(note.getFileAddress(), content);
         return Optional.of(note);
+    }
+
+    @Override
+    public Note item(int index) {
+        if (findAll().get(index) == null) {
+            return null;
+        }
+        return findAll().get(index);
     }
 
     @Override
