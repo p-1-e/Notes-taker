@@ -5,6 +5,7 @@ import com.pie.data.Note;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.util.UUID;
 import java.util.stream.Stream;
@@ -20,7 +21,8 @@ public class NoteUtils {
 
     // this method put an aleatory name to the file address
     public static String getFileAddress() {
-        return STR."\{NoteConstants.DIRECTORY}\{UUID.randomUUID().toString()}.txt";
+        //return STR."\{NoteConstants.DIRECTORY}\{UUID.randomUUID().toString()}.txt";
+        return MessageFormat.format("{0}{1}.txt", NoteConstants.DIRECTORY, UUID.randomUUID().toString());
     }
 
 

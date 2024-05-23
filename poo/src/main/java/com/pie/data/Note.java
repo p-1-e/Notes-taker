@@ -5,7 +5,7 @@ import com.pie.utils.NoteConstants;
 import com.pie.utils.NoteUtils;
 
 
-
+import java.text.MessageFormat;
 import java.time.LocalDate;
 
 public class Note {
@@ -35,7 +35,8 @@ public class Note {
 
     @Override
     public String toString(){
-        return STR."title:  \{getTitle()} \n text: \{getText()} \n address: \{getFileAddress()} \n date: \{getDate()}";
+        //return STR."title:  \{getTitle()} \n text: \{getText()} \n address: \{getFileAddress()} \n date: \{getDate()}";
+        return MessageFormat.format("title: {0} \ntext {1} \naddress: {2} \ndate: {3}", this.title, this.text, this.fileAddress, this.date);
     }
 
     // this method create a new file archive and returns the direction of the archive

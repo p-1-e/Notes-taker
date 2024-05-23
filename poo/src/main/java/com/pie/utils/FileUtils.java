@@ -18,7 +18,7 @@ public class FileUtils {
         try {
             File file = new File(fileAddress);
             if (file.createNewFile()) {
-                log.info(STR."file created in \{fileAddress}");
+                log.info("file created in {}", fileAddress);
                 return fileAddress;
             } else {
                 log.error("can't create the file");
@@ -57,7 +57,7 @@ public class FileUtils {
             log.error("the file was not found");
             log.error(e.getMessage());
         } catch (IOException e) {
-            log.error(STR."Exepcion de lectura: \{e.getMessage()}");
+            log.error("reading exception: {}", e.getMessage());
         }
         return null;
     }
