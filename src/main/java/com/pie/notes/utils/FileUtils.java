@@ -45,6 +45,7 @@ public class FileUtils {
         Path path = Path.of(fileAddress);
         try {
             Files.writeString(path, noteString, StandardOpenOption.APPEND);
+            log.info("Se escribio {}", noteString);
         } catch (IOException e) {
             log.error(e.getMessage());
         }
