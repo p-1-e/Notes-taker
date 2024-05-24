@@ -21,7 +21,6 @@ public class NotesServiceImpl implements NotesService {
         Note note = new Note();
         note.setTitle(title);
         note.setText(text);
-        note.save();
         var result = notesRepository.save(note);
         if (result == null){
             throw new Exception("Can't save");

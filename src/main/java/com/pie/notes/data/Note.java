@@ -20,7 +20,7 @@ public class Note {
         this.fileAddress = this.createNewFile();
         FileUtils.write(this.fileAddress, thisToText());
     }
-    public Note(String title, String text, String fileAddress, String date){
+    public Note(String title, String text, String date , String fileAddress){
         this.title = title;
         this.text = text;
         this.fileAddress = fileAddress;
