@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface NotesService {
-    Note save(Note note) throws Exception;
+    Note save(String title, String text) throws Exception;
     List<Note> findAll() throws Exception;
     Optional<Note> write(Note note);
     List<Note> searchByText(String text) throws Exception;

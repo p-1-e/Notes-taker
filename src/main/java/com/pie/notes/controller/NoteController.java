@@ -2,8 +2,12 @@ package com.pie.notes.controller;
 
 import com.pie.notes.data.Note;
 import com.pie.notes.service.NotesService;
+
+import java.text.MessageFormat;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/notes")
 public class NoteController {
     private final NotesService notesService;
-
+    private final Logger log = LogManager.getLogger(NoteController.class);
     public NoteController(NotesService notesService) {
         this.notesService = notesService;
     }
@@ -27,16 +31,11 @@ public class NoteController {
     }
 
     @PostMapping
-    public ResponseEntity<Note> save(@RequestBody String text, String title) {
-        Note note = new Note();
-        note.setTitle(title);
-        note.setText(text);
-        note.save();
+    public ResponseEntity<Note> save( @RequestParam(name = "title") String title, @RequestParam(name = "text") String text) {
         try {
-            return ResponseEntity.ok().body(notesService.save(note));
-        }catch (Exception e){
+            return ResponseEntity.ok().body(notesService.save(title, text));
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(null);
         }
-
     }
 }

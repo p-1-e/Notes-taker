@@ -22,7 +22,7 @@ import static com.pie.notes.utils.NoteConstants.SEPARATOR;
 public class NotesRepositoryImpl implements NotesRepository {
     private static final Logger log = LogManager.getLogger();
 
-    private static List<Note> notes = new ArrayList<>();
+
 
     @Override
     public List<Note> searchByTitle(String title) {
@@ -69,7 +69,7 @@ public class NotesRepositoryImpl implements NotesRepository {
 
     @Override
     public List<Note> findAll() {
-        notes = List.of();
+        List<Note> notes = new ArrayList<>();
         if (FileUtils.read(NOTE_ARRAY) == null) {
             return notes;
         }

@@ -17,7 +17,10 @@ public class NotesServiceImpl implements NotesService {
     }
 
     @Override
-    public Note save(Note note) throws Exception {
+    public Note save(String title, String text) throws Exception {
+        Note note = new Note();
+        note.setTitle(title);
+        note.setText(text);
         var result = notesRepository.save(note);
         if (result == null){
             throw new Exception("Can't save");
