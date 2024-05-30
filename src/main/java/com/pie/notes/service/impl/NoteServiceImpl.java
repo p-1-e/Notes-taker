@@ -1,6 +1,10 @@
 package com.pie.notes.service.impl;
 
 import com.pie.notes.data.Note;
+import com.pie.notes.exception.noteExeptions.DeleteNoteException;
+import com.pie.notes.exception.noteExeptions.NoteNotFoundException;
+import com.pie.notes.exception.noteExeptions.NotesNotFoundException;
+import com.pie.notes.exception.noteExeptions.SavingNoteException;
 import com.pie.notes.repository.NoteRepository;
 import com.pie.notes.service.NoteService;
 import jakarta.persistence.PersistenceException;
@@ -20,44 +24,49 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public List<Note> findAll() {
-        return noteRepository.findAll();
+    public List<Note> findAll() throws NotesNotFoundException {
+        List<Note> notes = noteRepository.findAll();
+        if (notes.isEmpty()) {
+            throw new NotesNotFoundException();
+        }
+        return notes;
     }
 
     @Override
-    public List<Note> search(String title) {
+    public List<Note> search(String title) throws NoteNotFoundException {
         var result = noteRepository.findByTitle(title);
         if (result.isEmpty()) {
-            //Todo: raise an Exception
+            throw new NoteNotFoundException(title);
         }
         return result;
     }
 
     @Override
-    public Note save(Note note) {
+    public Note save(Note note) throws SavingNoteException {
         try {
             return noteRepository.save(note);
         } catch (PersistenceException e) {
-            log.info("Can't save: {}, exception: {}", note, e.getMessage());
-            // Todo: raise an Exception
+            throw new SavingNoteException(note);
         }
     }
 
-
-
     @Override
-    public Note getNote(Long key) {
-        return noteRepository.getReferenceById(key);
+    public Note getNote(Long key) throws NoteNotFoundException {
+        try {
+            return noteRepository.getReferenceById(key);
+        } catch (PersistenceException e){
+            throw new NoteNotFoundException(key);
+        }
     }
 
     @Override
-    public Note remove(Long index) {
+    public Note remove(Long index) throws DeleteNoteException, NoteNotFoundException {
         var note = getNote(index);
         try {
             noteRepository.delete(note);
+            return note;
         } catch (PersistenceException e) {
-            log.error("Can't remove {}, error: {}", note, e.getMessage());
-            // Todo: raise an exception
+            throw new DeleteNoteException(note);
         }
     }
 }

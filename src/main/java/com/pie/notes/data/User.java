@@ -2,12 +2,14 @@ package com.pie.notes.data;
 
 import jakarta.persistence.*;
 
-@Table
+
+@Table(name = "app-user")
 @Entity
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+
     @Column(unique = true, nullable = false)
     private String name;
     @Column(unique = true, nullable = false)
@@ -20,6 +22,10 @@ public class User {
 
     public User() {
 
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
