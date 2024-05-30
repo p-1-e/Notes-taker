@@ -20,7 +20,7 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public List<Note> search(String title) {
-        return List.of(); //Todo: do the search
+        return noteRepository.findByTitle(title);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public Note actualize(Note note) {
-        return null;  // Todo: make this query
+        return noteRepository.save(note);
     }
 
     @Override
