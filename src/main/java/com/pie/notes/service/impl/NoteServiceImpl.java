@@ -43,15 +43,7 @@ public class NoteServiceImpl implements NoteService {
         }
     }
 
-    @Override
-    public Note actualize(Note note) {
-        try {
-            return noteRepository.save(note);
-        } catch (PersistenceException e) {
-            log.info("Can't actualize: {}, exception: {}", note, e.getMessage());
-            // Todo: raise an Exception
-        }
-    }
+
 
     @Override
     public Note getNote(Long key) {
