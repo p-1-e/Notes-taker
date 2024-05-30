@@ -1,14 +1,13 @@
 package com.pie.notes.data;
 
 import jakarta.persistence.*;
-import org.springframework.lang.NonNull;
 
 import java.time.LocalDate;
 
 
 @Table
 @Entity
-public class Note{
+public class Note {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,8 +22,19 @@ public class Note{
     private LocalDate date;
 
 
-
     public Note() {
+        this.date = LocalDate.now();
+    }
+
+    public Note(String title, String text, LocalDate date) {
+        this.title = title;
+        this.text = text;
+        this.date = date;
+    }
+
+    public Note(String title, String text) {
+        this.title = text;
+        this.text = text;
         this.date = LocalDate.now();
     }
 
@@ -48,7 +58,7 @@ public class Note{
         return date;
     }
 
-    public Long getId(){
+    public Long getId() {
         return id;
     }
 }
