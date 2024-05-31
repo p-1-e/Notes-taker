@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
     public boolean login(String name, String password){
         List<User> users = userRepository.findAll();
         for (User user : users) {
-            if (user.getName().equals(name) && user.getPassword().equals(password)) {
+            if (user.getUserName().equals(name) && user.getPassword().equals(password)) {
                 return true;
             }
         }
@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User register(User user) {
+    public User save(User user) {
         try {
             userRepository.save(user);
             return user;
@@ -36,8 +36,6 @@ public class UserServiceImpl implements UserService {
             return null;
             //Todo Agregar la exception
         }
-
-
     }
 
     @Override

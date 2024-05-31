@@ -11,7 +11,7 @@ import jakarta.persistence.PersistenceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
-
+import com.pie.notes.data.User;
 import java.util.List;
 
 @Service
@@ -24,8 +24,8 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public List<Note> findAll() throws NotesNotFoundException {
-        List<Note> notes = noteRepository.findAll();
+    public List<Note> findAll(User user) throws NotesNotFoundException {
+        List<Note> notes = noteRepository.findByUser(user);
         if (notes.isEmpty()) {
             throw new NotesNotFoundException();
         }
@@ -33,8 +33,8 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public List<Note> search(String title) throws NoteNotFoundException {
-        var result = noteRepository.findByTitle(title);
+    public List<Note> search(String title, User user) throws NoteNotFoundException {
+        var result = noteRepository.findByTitleAndUser(title, user);
         if (result.isEmpty()) {
             throw new NoteNotFoundException(title);
         }
@@ -51,17 +51,17 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public Note getNote(Long key) throws NoteNotFoundException {
+    public Note getNote(Long id) throws NoteNotFoundException {
         try {
-            return noteRepository.getReferenceById(key);
+            return noteRepository.getReferenceById(id);
         } catch (PersistenceException e){
-            throw new NoteNotFoundException(key);
+            throw new NoteNotFoundException(id);
         }
     }
 
     @Override
-    public Note remove(Long index) throws DeleteNoteException, NoteNotFoundException {
-        var note = getNote(index);
+    public Note remove(Long id) throws DeleteNoteException, NoteNotFoundException {
+        var note = getNote(id);
         try {
             noteRepository.delete(note);
             return note;

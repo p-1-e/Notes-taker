@@ -1,11 +1,10 @@
 package com.pie.notes.data;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 
 
-@Table
+
 @Entity
 public class Note {
     @Id
@@ -21,22 +20,19 @@ public class Note {
     @Column
     private LocalDate date;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    public Note() {
-        this.date = LocalDate.now();
-    }
 
-    public Note(String title, String text, LocalDate date) {
+    public Note() {}
+
+    public Note(String title, String text, User user) {
         this.title = title;
         this.text = text;
-        this.date = date;
+        this.user = user;
     }
 
-    public Note(String title, String text) {
-        this.title = text;
-        this.text = text;
-        this.date = LocalDate.now();
-    }
 
     public void setTitle(String title) {
         this.title = title;
