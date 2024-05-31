@@ -2,7 +2,10 @@ package com.pie.notes.controller;
 
 import com.pie.notes.data.User;
 import com.pie.notes.service.UserService;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 public class UserController {
@@ -13,14 +16,19 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public User register(@RequestBody User user) {
+    public ResponseEntity<User> register(@RequestBody User user) {
         userService.register(user);
-        return user;
+        return ResponseEntity.ok(user);
     }
 
     @GetMapping("/login")
-    public boolean login(@RequestParam String username, @RequestParam String password) {
-        return userService.login(username, password);
+    public ResponseEntity<Boolean> login(@RequestParam String username, @RequestParam String password) {
+        return ResponseEntity.ok(userService.login(username, password));
+    }
+
+    @GetMapping("/users")
+    public List<User> findAll(){
+        return userService.findAll();
     }
 
 }
