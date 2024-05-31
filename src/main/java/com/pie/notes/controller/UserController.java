@@ -2,7 +2,6 @@ package com.pie.notes.controller;
 
 import com.pie.notes.data.User;
 import com.pie.notes.service.UserService;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -17,7 +16,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody User user) {
-        userService.register(user);
+        userService.save(user);
         return ResponseEntity.ok(user);
     }
 
