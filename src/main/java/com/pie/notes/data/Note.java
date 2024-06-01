@@ -20,17 +20,27 @@ public class Note {
     @Column
     private LocalDate date;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+//    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
 
     public Note() {}
 
+    public Note(Long id, String title, String text, LocalDate date, User user) {
+        this.id = id;
+        this.title = title;
+        this.text = text;
+        this.date = date;
+        this.user = user;
+    }
+
     public Note(String title, String text, User user) {
         this.title = title;
         this.text = text;
         this.user = user;
+        this.date = LocalDate.now();
     }
 
 

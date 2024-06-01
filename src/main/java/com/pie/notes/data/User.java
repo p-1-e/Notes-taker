@@ -18,8 +18,8 @@ public class User {
     @Column(unique = true, nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Note> notes;
+    //@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    //private List<Note> notes;
 
     public User(String name, String password) {
         this.userName = name;
