@@ -9,6 +9,7 @@ import jakarta.persistence.PersistenceException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
@@ -33,9 +34,8 @@ public class UserServiceImpl implements UserService {
         try {
             userRepository.save(user);
             return user;
-        }catch (PersistenceException e){
+        } catch (PersistenceException e) {
             throw new RegisterExeception(user);
-
         }
     }
 

@@ -1,4 +1,4 @@
-package com.pie.notes.service;
+package com.pie.notes.service.impl;
 
 import com.pie.notes.data.Note;
 import com.pie.notes.exception.noteExeptions.DeleteNoteException;
@@ -6,6 +6,7 @@ import com.pie.notes.exception.noteExeptions.NoteNotFoundException;
 import com.pie.notes.exception.noteExeptions.NotesNotFoundException;
 import com.pie.notes.exception.noteExeptions.SavingNoteException;
 import com.pie.notes.repository.NoteRepository;
+import com.pie.notes.service.NoteService;
 import jakarta.persistence.PersistenceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
