@@ -1,17 +1,16 @@
 package com.pie.notes.service.impl;
 
 import com.pie.notes.data.Note;
+import com.pie.notes.data.User;
 import com.pie.notes.exception.noteExeptions.DeleteNoteException;
 import com.pie.notes.exception.noteExeptions.NoteNotFoundException;
 import com.pie.notes.exception.noteExeptions.NotesNotFoundException;
-import com.pie.notes.exception.noteExeptions.SavingNoteException;
 import com.pie.notes.repository.NoteRepository;
 import com.pie.notes.service.NoteService;
-import jakarta.persistence.PersistenceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
-import com.pie.notes.data.User;
+
 import java.util.List;
 
 @Service
@@ -42,31 +41,27 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public Note save(Note note) throws SavingNoteException {
-        try {
-            return noteRepository.save(note);
-        } catch (PersistenceException e) {
-            throw new SavingNoteException(note);
-        }
+    public Note save(Note note) {
+        return noteRepository.save(note);
     }
 
     @Override
     public Note getNote(Long id) throws NoteNotFoundException {
-        try {
-            return noteRepository.getReferenceById(id);
-        } catch (PersistenceException e){
+        var noteOpt = noteRepository.findById(id);
+        if (noteOpt.isEmpty()) {
             throw new NoteNotFoundException(id);
         }
+        return noteOpt.get();
     }
 
     @Override
-    public Note remove(Long id) throws DeleteNoteException, NoteNotFoundException {
-        var note = getNote(id);
+    public void remove(Long id) throws DeleteNoteException {
         try {
-            noteRepository.delete(note);
-            return note;
-        } catch (PersistenceException e) {
-            throw new DeleteNoteException(note);
+            getNote(id);
+            noteRepository.deleteById(id);
+        } catch (NoteNotFoundException e) {
+            log.info("note {} does not exist", id);
+            throw new DeleteNoteException(id);
         }
     }
 }
