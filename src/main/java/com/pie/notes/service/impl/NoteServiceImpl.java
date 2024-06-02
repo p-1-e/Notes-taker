@@ -41,6 +41,13 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
+    public Note update(Note note) throws NoteNotFoundException {
+        getNote(note.getId());
+        noteRepository.updateNote(note.getId(), note.getTitle(), note.getText());
+        return note;
+    }
+
+    @Override
     public Note save(Note note) {
         return noteRepository.save(note);
     }

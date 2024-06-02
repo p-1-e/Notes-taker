@@ -13,4 +13,5 @@ public interface NoteService {
     Note save(Note note);
     Note getNote(Long id) throws NoteNotFoundException;
     void remove(Long id) throws DeleteNoteException;
+    Note update(Note note) throws NoteNotFoundException;
 }

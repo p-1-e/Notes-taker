@@ -1,4 +1,4 @@
-package com.pie.notes.service.impl;
+package com.pie.notes.service;
 
 import com.pie.notes.data.Note;
 import com.pie.notes.data.User;
@@ -82,13 +82,29 @@ class NoteServiceImplTest {
         assertEquals(expected.getId(), foundedNote.getId());
     }
 
-    @Test void remove() throws DeleteNoteException, NotesNotFoundException {
+    @Test
+    void remove() throws DeleteNoteException, NotesNotFoundException {
         settingTestingNotes();
         testingNotes.forEach(noteService::save);
         Long id = testingNotes.get(0).getId();
         noteService.remove(id);
         var notes = noteService.findAll(user);
-        assertEquals(testingNotes.size() - 1 , notes.size());
+        assertEquals(testingNotes.size() - 1, notes.size());
     }
 
+    @Test
+    void updateNote() throws NoteNotFoundException {
+        settingTestingNotes();
+        testingNotes.forEach(noteService::save);
+        var targetNote = testingNotes.get(0);
+        targetNote.setText("testing text");
+        targetNote.setTitle("testing title");
+
+        noteService.update(targetNote);
+        var testingNote = noteService.getNote(targetNote.getId());
+        boolean equals = targetNote.getTitle().equals(testingNote.getTitle())
+                && targetNote.getText().equals(testingNote.getText());
+
+        assertTrue(equals);
+    }
 }
