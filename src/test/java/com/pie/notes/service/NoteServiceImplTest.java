@@ -1,4 +1,4 @@
-package com.pie.notes.service.impl;
+package com.pie.notes.service;
 
 import com.pie.notes.data.Note;
 import com.pie.notes.data.User;
