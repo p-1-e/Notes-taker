@@ -2,9 +2,6 @@ package com.pie.notes.data;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-import java.text.MessageFormat;
-
 
 @Table(name = "app-user")
 @Entity
@@ -15,11 +12,9 @@ public class User {
 
     @Column(unique = true, nullable = false)
     private String userName;
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String password;
 
-    //@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    //private List<Note> notes;
 
     public User(String name, String password) {
         this.userName = name;

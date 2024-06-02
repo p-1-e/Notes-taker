@@ -1,6 +1,5 @@
 package com.pie.notes.controller;
 
-
 import com.pie.notes.data.Note;
 import com.pie.notes.data.User;
 import com.pie.notes.exception.noteExeptions.DeleteNoteException;
@@ -46,8 +45,12 @@ public class NotesController {
     }
 
     @PostMapping("/notes/{id}")
-    public ResponseEntity<Note> actualize(@PathVariable("id") Long id, @RequestBody Note note) {
-        return ResponseEntity.ok(noteService.save(note));
+    public ResponseEntity<Note> update(@PathVariable("id") Long id, @RequestBody Note note) {
+        try {
+            return ResponseEntity.ok(noteService.update(note));
+        } catch (NoteNotFoundException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
     @GetMapping("/notes/search-title")
