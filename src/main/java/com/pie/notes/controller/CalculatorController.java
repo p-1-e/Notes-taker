@@ -8,15 +8,13 @@ import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import com.pie.notes.service.CalculatorService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import com.pie.notes.data.User;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
 @Controller
+@CrossOrigin(origins = "*")
 public class CalculatorController {
 
     private final CalculatorService calculatorService;
@@ -35,7 +33,7 @@ public class CalculatorController {
     }
 
     @PostMapping("/calculator")
-    public ResponseEntity<Calculator> basicOperation(@RequestParam List<Double> numbers, @RequestParam String operator, @RequestBody User user){
+    public ResponseEntity<Calculator> basicOperation(@RequestParam double[] numbers, @RequestParam String operator, @RequestBody User user){
         try{
             return ResponseEntity.ok().body(calculatorService.basicOperation(numbers, operator,user));
         }catch (InvalidOperatorException| InvalidOperationException e){

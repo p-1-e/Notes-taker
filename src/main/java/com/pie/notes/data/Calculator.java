@@ -3,8 +3,6 @@ package com.pie.notes.data;
 import jakarta.persistence.*;
 
 import java.util.List;
-import com.pie.notes.data.User;
-import org.springframework.lang.NonNull;
 
 @Table
 @Entity
@@ -14,7 +12,7 @@ public class Calculator {
     private Long id;
     
     @Column(nullable = false)
-    private List<Double> numbers;
+    private double[] numbers;
 
     @Column
     private String operator;
@@ -26,7 +24,7 @@ public class Calculator {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public Calculator (List<Double> numbers, String operator, String result, User user) {
+    public Calculator (double[] numbers, String operator, String result, User user) {
         this.numbers = numbers;
         this.operator = operator;
         this.result = result;
@@ -35,11 +33,11 @@ public class Calculator {
 
     public Calculator(){}
 
-    public List<Double> getNumber() {
+    public double[] getNumber() {
         return numbers;
     }
 
-    public void setNumber(List<Double> number) {
+    public void setNumber(double[] number) {
         this.numbers = number;
     }
 
