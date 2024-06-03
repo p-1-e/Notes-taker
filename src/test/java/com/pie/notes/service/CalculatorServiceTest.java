@@ -35,7 +35,7 @@ public class CalculatorServiceTest {
     @Test
     void addiction_of_the_two_numbers() throws InvalidOperatorException, InvalidOperationException, RegisterExeception {
         settingUser();
-        var numbers = List.of(2.0, 5.0);
+        double[] numbers = {2.0, 5.0};
         var operator = "+";
         var addiction = calculatorService.basicOperation(numbers,operator,user);
         log.info(addiction.getResult());
@@ -44,7 +44,7 @@ public class CalculatorServiceTest {
     @Test
     void subtraction_of_the_two_numbers() throws InvalidOperatorException, InvalidOperationException, RegisterExeception {
         settingUser();
-        var numbers= List.of(2.0, 6.0);
+        double[] numbers= {2.0, 6.0};
         var operator = "-";
         var subtraction = calculatorService.basicOperation(numbers,operator,user);
         log.info(subtraction.getResult());
@@ -53,16 +53,16 @@ public class CalculatorServiceTest {
     @Test
     void multiplication_of_two_numbers_user() throws InvalidOperationException, InvalidOperatorException, RegisterExeception {
         settingUser();
-        var numbers = List.of(4.0, 7.0);
+        double[] numbers = {2.0, 6.0};
         var operator = "*";
         var multiplication = calculatorService.basicOperation(numbers, operator, user);
         log.info(multiplication.getResult());
-        assertEquals("28", multiplication.getResult());
+        assertEquals("12", multiplication.getResult());
     }
     @Test
     void division_of_two_numbers() throws InvalidOperatorException, InvalidOperationException, RegisterExeception {
         settingUser();
-        var numbers= List.of(6.0, 6.0);
+        double[] numbers= {6.0, 6.0};
         var operator = "/";
         var division = calculatorService.basicOperation(numbers, operator, user);
         log.info(division.getResult());
@@ -74,8 +74,9 @@ public class CalculatorServiceTest {
         double a = 1;
         double b = 3;
         double c = 2;
-        var result = calculatorService.quadratic(a,b,c,user);
-        log.info(result.getResult());
+        var roots = calculatorService.quadratic(a,b,c,user);
+        log.info(roots.getResult());
+        assertEquals("[-1.0, -2.0]", roots.getResult());
 
     }
     @Test
@@ -94,6 +95,6 @@ public class CalculatorServiceTest {
         Integer b = 8;
         var result = calculatorService.lcm(a, b, user);
         log.info(result.getResult());
-        assertEquals("2", result.getResult());
+        assertEquals("24", result.getResult());
     }
 }

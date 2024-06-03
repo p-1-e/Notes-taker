@@ -18,7 +18,7 @@ public class CalculatorService implements com.pie.notes.service.CalculatorServic
     public CalculatorService(CalculatorRepository calculatorRepository){
         this.calculatorRepository = calculatorRepository;
     }
-    private Calculator saveCalculator(List<Double> numbers, String operator, String result, User user ){
+    private Calculator saveCalculator(double[] numbers, String operator, String result, User user ){
         var calculator = new Calculator(numbers, operator, result, user);
         return calculatorRepository.save(calculator);
     }
@@ -34,24 +34,25 @@ public class CalculatorService implements com.pie.notes.service.CalculatorServic
 
     
     @Override
-    public Calculator basicOperation(List<Double> numbers, String operator, User user) throws InvalidOperationException {
+    public Calculator basicOperation(double[] numbers, String operator, User user) throws InvalidOperationException, InvalidOperatorException {
         double result = 0;
-        if (numbers.size() != 2){
+        if (numbers.length != 2){
             throw new InvalidOperationException("Syntax Error");
         }
         switch (operator){
-            case "+" -> result = numbers.get(0) + numbers.get(1);
-            case "-" -> result = numbers.get(0) - numbers.get(1);
-            case "*" -> result = numbers.get(0) * numbers.get(1);
+            case "+" -> result = numbers[0] + numbers[1];
+            case "-" -> result = numbers[0] - numbers[1];
+            case "*" -> result = numbers[0] * numbers[1];
             case "/" -> {
-                if (numbers.get(1) == 0) {
+                if (numbers[1] == 0) {
                     throw new InvalidOperationException("Can not divide by zero");
                 }
-                result = numbers.get(0) / numbers.get(1);
+                result = numbers[0] / numbers[1];
             }
+            default -> throw new InvalidOperatorException(operator);
+
         }
         return saveCalculator(numbers, operator, MessageFormat.format("{0}", result), user);
-
     }
 
     @Override
@@ -70,15 +71,15 @@ public class CalculatorService implements com.pie.notes.service.CalculatorServic
         } else {
             throw new InvalidOperationException("The result is a number complex");
         }
-        return saveCalculator(List.of(a, b, c), "quadratic equation", roots.toString(), user);
+        return saveCalculator(new double[]{a, b, c}, "quadratic equation", roots.toString(), user);
     }
 
     @Override
     public Calculator gcd(Integer a, Integer b, User user) throws InvalidOperationException{
-        List<Double> numbers = List.of((double) a,  (double) b);
+        double[] numbers = {(double) a, (double) b};
         while(b != 0){
             int temp = b;
-            b %= a;
+            b = a % b;
             a = temp;
         }
         return saveCalculator(numbers, "gcd", a.toString(), user);
@@ -86,8 +87,9 @@ public class CalculatorService implements com.pie.notes.service.CalculatorServic
 
     @Override
     public Calculator lcm(Integer a, Integer b, User user) throws InvalidOperationException {
-        List<Double> numbers = List.of((double) a ,(double) b); 
-        Integer result = (a*b)/ Integer.parseInt(gcd(a, b, user).getResult()) ;
+        double[] numbers = {(double) a , (double) b};
+        Integer gcd = Integer.parseInt(gcd(a, b, user).getResult());
+        Integer result = (a*b) /  gcd;
         return saveCalculator(numbers, "lcm", result.toString(), user);
     }
 }
