@@ -19,11 +19,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean login(String name, String password) throws LoginException {
+    public User login(String name, String password) throws LoginException {
         List<User> users = userRepository.findAll();
         for (User user : users) {
             if (user.getUserName().equals(name) && user.getPassword().equals(password)) {
-                return true;
+                return user;
             }
         }
         throw new LoginException();

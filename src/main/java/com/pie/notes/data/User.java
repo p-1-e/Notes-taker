@@ -1,10 +1,14 @@
 package com.pie.notes.data;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 
 @Table(name = "app-user")
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -24,6 +28,17 @@ public class User {
 
     public User() {
 
+    }
+
+    @JsonCreator
+    public User(
+            @JsonProperty("id") Long id,
+            @JsonProperty("userName") String username,
+            @JsonProperty("password") String password
+    ) {
+        this.id = id;
+        this.userName = username;
+        this.password = password;
     }
 
     public Long getId() {

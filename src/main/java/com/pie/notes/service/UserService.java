@@ -7,7 +7,7 @@ import com.pie.notes.exception.userException.RegisterExeception;
 import java.util.List;
 
 public interface UserService {
-    boolean login(String name, String password) throws LoginException;
+    User login(String name, String password) throws LoginException;
     User save(User user) throws RegisterExeception;
     List<User> findAll();
 }

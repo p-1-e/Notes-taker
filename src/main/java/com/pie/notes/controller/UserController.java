@@ -29,11 +29,11 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public ResponseEntity<Boolean> login(@RequestParam String username, @RequestParam String password) {
+    public ResponseEntity<User> login(@RequestParam String username, @RequestParam String password) {
         try {
             return ResponseEntity.ok(userService.login(username, password));
         } catch (LoginException e) {
-            return ResponseEntity.badRequest().body(false);
+            return ResponseEntity.badRequest().body(null);
         }
     }
 
