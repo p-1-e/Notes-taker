@@ -4,6 +4,7 @@ import com.pie.notes.data.Calculator;
 import com.pie.notes.exception.calculatorExeptions.CalculatorNotFoundException;
 import com.pie.notes.exception.calculatorExeptions.InvalidOperationException;
 import com.pie.notes.exception.calculatorExeptions.InvalidOperatorException;
+import com.pie.notes.service.UserService;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,19 +13,29 @@ import org.springframework.web.bind.annotation.*;
 import com.pie.notes.data.User;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @CrossOrigin(origins = "*")
 public class CalculatorController {
 
     private final CalculatorService calculatorService;
+    private final UserService userService;
 
-    public CalculatorController(CalculatorService calculatorService){
+    public CalculatorController(CalculatorService calculatorService, UserService userService){
         this.calculatorService = calculatorService;
+        this.userService = userService;
+    }
+
+    private User getUser(Long id){
+        List<User> users = userService.findAll();
+        Optional<User> user = users.stream().filter(u -> u.getId().equals(id)).findFirst();
+        return user.orElse(null);
     }
 
     @GetMapping("/calculators")
-    public ResponseEntity<List<Calculator>> findAll(@RequestBody User user){
+    public ResponseEntity<List<Calculator>> findAll(@RequestParam Long userId){
+        User user = getUser(userId);
         try {
             return ResponseEntity.ok().body(calculatorService.findAll(user));
         } catch (CalculatorNotFoundException e) {
