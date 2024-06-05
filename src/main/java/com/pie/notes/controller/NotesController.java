@@ -6,22 +6,36 @@ import com.pie.notes.exception.noteExeptions.DeleteNoteException;
 import com.pie.notes.exception.noteExeptions.NoteNotFoundException;
 import com.pie.notes.exception.noteExeptions.NotesNotFoundException;
 import com.pie.notes.service.NoteService;
+import com.pie.notes.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*")
 public class NotesController {
     private final NoteService noteService;
+    private final UserService userService;
 
-    public NotesController(NoteService noteService) {
+    public NotesController(NoteService noteService, UserService userService) {
         this.noteService = noteService;
+        this.userService = userService;
+    }
+
+    private User getUser(Long id){
+        List<User> users = userService.findAll();
+        Optional<User> user = users.stream().filter(u -> u.getId().equals(id)).findFirst();
+        return user.orElse(null);
     }
 
     @GetMapping("/notes")
-    public ResponseEntity<List<Note>> findAll(@RequestBody User user) {
+    public ResponseEntity<List<Note>> findAll(@RequestParam Long userID) {
+        User user = getUser(userID);
+        if (user == null){
+            return ResponseEntity.badRequest().body(List.of());
+        }
         try {
             return ResponseEntity.ok(noteService.findAll(user));
         } catch (NotesNotFoundException e) {
@@ -29,8 +43,8 @@ public class NotesController {
         }
     }
 
-    @PostMapping("/note/{title}")
-    public ResponseEntity<Note> newNote(@PathVariable("title") String title, @RequestParam String text, @RequestBody User user) {
+    @PostMapping("/note/save")
+    public ResponseEntity<Note> newNote(@RequestParam("title") String title, @RequestParam String text, @RequestBody User user) {
         var note = new Note(title, text, user);
         return ResponseEntity.ok(noteService.save(note));
     }
@@ -54,7 +68,11 @@ public class NotesController {
     }
 
     @GetMapping("/notes/search-title")
-    public ResponseEntity<List<Note>> search(@RequestParam String title, @RequestBody User user) {
+    public ResponseEntity<List<Note>> search(@RequestParam String title, @RequestParam Long userID) {
+        User user = getUser(userID);
+        if (user == null){
+            return ResponseEntity.badRequest().body(List.of());
+        }
         try {
             return ResponseEntity.ok(noteService.search(title, user));
         } catch (NoteNotFoundException e) {
